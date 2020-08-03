@@ -23,16 +23,16 @@
         </header>
 
         <main>
-            <section>
-                <div class="">
-                    <label for="urlinput">Enter Your URL Here</label>
-                    <input type="text" id="urlinput" placeholder="Input URL Here">
-                    <button id="generate" type = "submit">Analyze Text</button>
-                </div>
-            <section>
+            <section class="form">
+                <form onsubmit="return handleSubmit(event)">
+                <input id="name" type="text" name="input" value="" placeholder="Enter URL Here">
+                <input class="button" type="submit" name="" value="Submit" onclick="return Client.handleSubmit(event)" onsubmit="return Client.handleSubmit(event)">
+                </form>
+            </section>
 
             <section>
                 <strong>Form Results:</strong>
+                <div id="polarity"></div>
                 <div id="agreement"></div>
                 <div id="subjectivity"></div>
                 <div id="confidence"></div>
@@ -43,7 +43,7 @@
         <footer>
             <p>Footer</p>
         </footer>
-
+        <script src="./app.js" type="text/javascript"></script>
         <script>
             // Check that service workers are supported
             if ('serviceWorker' in navigator) {
