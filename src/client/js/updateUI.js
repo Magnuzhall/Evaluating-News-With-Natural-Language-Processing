@@ -1,23 +1,14 @@
-//Variables to change the UI once button is clicked
-const firstElement = document.getElementById('agreement');
-const secondElement = document.getElementById('subjectivity');
-const thirdElement = document.getElementById('confidence');
-const fourthElement = document.getElementById('irony');
+function checkForName(inputText) {
+    console.log(" ::: Running checkForName ::: ", inputText);
 
-//Function to update the UI - this retrieves data from our app and dynamically updates the values
-const updateUI = async () => {
-    
-    const request = await fetch('/');
-    try {
-        const allData = await request.json();
-        firstElement.innerHTML = `Agreement: ${allData.agreement}`;
-        secondElement.innerHTML = `Subjectivity: ${allData.subjectivity}`;
-        thirdElement.innerHTML = `Confidence: ${allData.confidence}`;
-        fourthElement.innerHTML = `Irony: ${allData.irony}`;
-    }
-    catch(error) {
-        console.log("error", error);
+    //Check if URL is valid
+    var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    if (inputText === res) {
+        alert('Please input a valid URL');
+        return 0;
+    } else {
+        return 1;
     }
 }
 
-export { updateUI }
+export { checkForName }
