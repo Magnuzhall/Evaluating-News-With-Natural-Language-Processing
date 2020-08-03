@@ -1,9 +1,6 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
-// Setup empty JS object to act as endpoint for all routes
-projectData = {};
-
 // Express to run server and routes
 const express = require('express');
 
@@ -27,35 +24,29 @@ app.use(cors());
 // Initialize the main project folder
 app.use(express.static('dist'));
 
-// Spin up the server
-const port = 8085;
-const server = app.listen(port, listening);
-// Callback to debug
-function listening() {
-    console.log(`Running on port ${port}`);
-}
+app.get('/', (req, res) => {
+    res.sendFile('dist/index.html')
+})
 
-// Initialize all route with a callback function
-app.get('/', sendData);
+const apiKey = process.env.API_KEY;
 
-// Callback function to complete GET '/all'
-function sendData (request, response) {
-    response.sendFile("dist/index.html");
-}
+const port = 8081;
+app.listen(port, () => {
+    console.log(`The server is running on local host ${port}`);
+})
 
-// Post Route - adds incoming data to projectData object
-app.post('/dataEntry', dataEntry);
+app.post('/test', (req, res) => {
+    const url = req.body.url;
+    analyzeSentiment(url, apiKey, (data) => {
+        res.send(data);
+    });
+})
 
-function dataEntry (request, response) {
-    const d = request.body;
-    console.log(d);
-    projectData['agreement'] = d.agreement;
-    projectData['subjectivity'] = d.subjectivity;
-    projectData['confidence'] = d.confidence;
-    projectData['irony'] = d.irony;
-}
-
-app.get('/', sendInfo);
-function sendInfo (request, response) {
-    response.send(projectData);
+const analyzeSentiment = (url, key, callback) => {
+    request(`https://api.meaningcloud.com/sentiment-2.1?key=${key}&lang=en&url=${url}`, { json: true })
+    if (!err && res.statusCode == 200) {
+        callback(body);
+    }   else {
+        console.log(error);
+    }
 }
