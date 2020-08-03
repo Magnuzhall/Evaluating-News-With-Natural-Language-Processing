@@ -1,4 +1,4 @@
-import { checkForName } from '../client/js/updateUI'
+import { checkForName } from '../client/js/checkForName'
 
 describe("Testing the Update UI functionality", () => {
     test("Testing the updateUI() function", () => {
