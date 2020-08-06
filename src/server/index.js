@@ -1,3 +1,4 @@
+const request = require('request');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -9,7 +10,6 @@ const app = express();
 
 /* Dependencies */
 const bodyParser = require('body-parser');
-
 /* Middleware*/
 
 //Here we are configuring express to use body-parser as middle-ware.
@@ -18,7 +18,6 @@ app.use(bodyParser.json());
 
 // Cors for cross origin allowance
 const cors = require('cors');
-const { response } = require('express');
 app.use(cors());
 
 // Initialize the main project folder
@@ -43,10 +42,11 @@ app.post('/test', (req, res) => {
 })
 
 const analyzeSentiment = (url, key, callback) => {
-    request(`https://api.meaningcloud.com/sentiment-2.1?key=${key}&lang=en&url=${url}`, { json: true })
-    if (!err && res.statusCode == 200) {
-        callback(body);
-    }   else {
-        console.log(error);
-    }
+    request(`https://api.meaningcloud.com/sentiment-2.1?key=${key}&lang=en&url=${url}`, { json: true },function(err, res, body) {
+        if (!err && res.statusCode == 200) {
+            callback(body);
+        }   else {
+            console.log(error);
+        }
+    })
 }
